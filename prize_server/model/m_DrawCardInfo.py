@@ -26,14 +26,13 @@ class DrawCardInfo(BaseModel):
             insert_map['create_time'] = Utils.timestamp()
             db_client = self.get_db_client()
             res_insert_draw = yield db_client.insert('draw_card_info', **insert_map)
-            if res_insert_draw:
-                result = False
+            if res_insert_draw < 0:
                 self.Break()
             uid = account_info['UserID']
             '''本地数据库试验'''
             # res_insert_score = yield db_client.increase_update(r'game_score_info', where={'user_id': uid},
             #                                                    fields1={'insure_score': 5})
-            # if res_insert_score:
+            # if not res_insert_score > 0:
             #     self.Break()
 
             '''mssql数据库正式操作'''

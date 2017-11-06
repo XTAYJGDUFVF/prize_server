@@ -21,15 +21,16 @@ class PrizeLog(BaseModel):
         with catch_error():
             db_client = self.get_db_client()
             if plus_num:                # 插入获奖日志，并且增加房卡
+                if plus_num > 0:        # 需要增加房卡的
 
-                '''增加房卡'''
-                update_score_statu = yield db_client.increase_update(r'game_score_info',
-                                                       where={'user_id': uid},
-                                                       fields1={'insure_score': plus_num})
-                # print(2, update_score_statu)    # 0
-                if not update_score_statu > 0:
-                    result[1] = ErrorCode.Database.set_extra('增加房卡失败！')
-                    self.Break()
+                    '''增加房卡'''
+                    update_score_statu = yield db_client.increase_update(r'game_score_info',
+                                                                         where={'user_id': uid},
+                                                                         fields1={'insure_score': plus_num})
+                    # print(2, update_score_statu)    # 0
+                    if not update_score_statu > 0:
+                        result[1] = ErrorCode.Database.set_extra('增加房卡失败！')
+                        self.Break()
 
                 # mssql_score_conn = self.get_mssql_conn(Config.MssqlTreasureDbName)
                 # with mssql_score_conn.cursor() as cur:
@@ -42,7 +43,7 @@ class PrizeLog(BaseModel):
                 # mssql_score_conn.commit()
                 # mssql_score_conn.close()
 
-                '''更新获奖日志'''
+                '''更新获奖日志，需要加京东卡或红包的'''
                 insert_statu = yield db_client.insert('prize_log', **param)
                 # print(1, insert_statu)  # 0
                 if insert_statu < 0:

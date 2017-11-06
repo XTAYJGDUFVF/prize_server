@@ -7,6 +7,7 @@ from model.m_MakePrize import MakePrize
 from model.m_PrizeLog import PrizeLog
 from model.m_PrizeInfo import PrizeInfoModel
 from model.m_CardUsedInfo import CardUsedInfoModel
+from model.m_test import Tests
 
 from util.prize_id import Prize_Id
 from model.m_error import ErrorCode
@@ -65,18 +66,18 @@ class GetPrize(RequestBaseHandler):
 
     @coroutine
     def get_prize_id(self, uid, prize_need_list):
-        prize_id = None
         prize_id = yield Prize_Id(prize_need_list).get_id()
+        if prize_need_list[prize_id - 1][prize_id]['prize_num'] == None:
+            return prize_id
         m_prize_log = PrizeLog()
         per_today_prize_count = yield m_prize_log.per_today_prize_count(uid, prize_id)  # 今天该人获得的总数
         all_today_prize_count = yield m_prize_log.all_today_prize_count(prize_id)       # 今天该奖项获得的总数
         largest_perday = prize_need_list[prize_id - 1][prize_id]['largest_perday']      # 该奖项获得最大数
         largest_per_get = prize_need_list[prize_id - 1][prize_id]['largest_per_get']    # 单人获得最大数
-        if prize_need_list[prize_id - 1][prize_id]['prize_num'] == None:
+        if all_today_prize_count < largest_per_get and per_today_prize_count < largest_perday:
             return prize_id
-        if per_today_prize_count >= largest_per_get or all_today_prize_count >= largest_perday:
+        if all_today_prize_count >= largest_per_get or per_today_prize_count >= largest_perday:
             yield self.get_prize_id(uid)
-        return prize_id
 
 
 class ReadLog(RequestBaseHandler):
@@ -90,3 +91,10 @@ class ReadLog(RequestBaseHandler):
             return self.write_json({'prize_log': None}, 400)
 
         return self.write_json({'prize_log': prize_log}, 200)
+
+
+class Test(RequestBaseHandler):
+
+    @coroutine
+    def get(self):
+        m_test = Tests().test()

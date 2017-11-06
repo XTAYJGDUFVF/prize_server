@@ -24,16 +24,16 @@ class Entry():
 
     def __init__(self):
 
-        self._is_linux = (platform.system() == r'Linux')
+        self._is_linux = (platform.system() == r'Linux')            # 判定当前平台
 
         self._process_id = 0
-        self._process_num = cpu_count()
+        self._process_num = cpu_count()                             # cup数
 
-        self._sockets = bind_sockets(Config.Port)
+        self._sockets = bind_sockets(Config.Port)                   # 创建socket对象，绑定端口
 
-        if self._is_linux:
+        if self._is_linux:                                          # 如果是linux系统
 
-            self._process_id = fork_processes(self._process_num)
+            self._process_id = fork_processes(self._process_num)    #
 
         self._init_options()
 

@@ -43,7 +43,6 @@ class WxMenuServer(RequestBaseHandler):
             data = yield self.create_menu_data()
             r = requests.post(url, data.encode('utf-8'))
             logger.debug('【微信自定义菜单】自定义菜单创建接口Response[' + str(r.status_code) + ']')
-            print(r.text)
             if r.status_code == 200:
                 res = r.text
                 logger.debug('【微信自定义菜单】自定义菜单创建接口' + res)

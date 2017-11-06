@@ -52,4 +52,4 @@ class AnalysisChance(Singleton):
                 initial_draw_status = yield m_draw_card_info.initial_draw_card_info(union_id_info[1])
                 if initial_draw_status:
                     return '%s,领取成功，快去游戏吧！' % (nickname,)
-            return '%s您没有登录绑定游戏，快去下载绑定吧！' % (nickname,)
+            return '%s,您没有登录绑定游戏，快去下载绑定吧！'%(nickname,)
