@@ -1,0 +1,23 @@
+
+[D 171106 09:59:54 selector_events:65] Using selector: SelectSelector
+[I 171106 09:59:54 database:34] MySQL pool initialized
+[D 171106 09:59:54 connection:75] Creating tcp connection to ('192.168.72.128', 6379)
+[D 171106 09:59:54 connection:75] Creating tcp connection to ('192.168.72.128', 6379)
+[D 171106 09:59:54 connection:75] Creating tcp connection to ('192.168.72.128', 6379)
+[D 171106 09:59:54 connection:75] Creating tcp connection to ('192.168.72.128', 6379)
+[D 171106 09:59:54 connection:75] Creating tcp connection to ('192.168.72.128', 6379)
+[I 171106 09:59:54 cache:47] MCachePool initialized
+[I 171106 09:59:54 main:82] Startup http server No.0, pid 5240
+[I 171106 09:59:59 base:19] None GET False
+[D 171106 09:59:59 database:191] SELECT first_time,left_chance,used_chance FROM make_prize WHERE `user_id` = '126';
+[D 171106 09:59:59 database:191] SELECT left_chance,used_chance,added_chance FROM make_prize WHERE `user_id` = '126';
+[I 171106 09:59:59 base:89] mssql connect to QPRecordDB
+[I 171106 09:59:59 base:92] mssql conn closed
+[D 171106 09:59:59 database:191] UPDATE make_prize SET left_chance = left_chance + 0, added_chance = added_chance + 0 WHERE `user_id` = '126';
+[I 171106 09:59:59 web:2063] 200 GET /initial_info/?uid=126 (192.168.0.170) 247.01ms
+[I 171106 09:59:59 base:19] None GET False
+[D 171106 09:59:59 database:191] SELECT left_chance FROM make_prize WHERE `user_id` = '126';
+[I 171106 09:59:59 web:2063] 200 GET /get_prize/?uid=126 (192.168.0.170) 6.00ms
+[I 171106 09:59:59 base:19] None GET False
+[D 171106 09:59:59 database:191] SELECT FROM_UNIXTIME(create_time, '%Y-%m-%d %H:%i:%S') as date_info, prize_info.prize_name FROM prize_log left join prize_info on prize_log.prize_id = prize_info.prize_id WHERE `user_id` = '126' ORDER BY create_time desc LIMIT 5;
+[I 171106 09:59:59 web:2063] 200 GET /prize_log/?uid=126 (192.168.0.170) 6.00ms

@@ -1,0 +1,14 @@
+[2017-11-02 14:26:50]: runtime-log ERROR 43 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)
+[2017-11-02 17:08:29]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-02 17:10:52]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-02 17:14:03]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-02 17:16:25]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-02 17:20:39]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-02 18:09:42]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-02 18:26:36]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-03 10:58:25]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-03 11:08:50]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-03 13:10:55]: runtime-log ERROR 46 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)
+[2017-11-03 13:12:59]: runtime-log INFO 22 【获取微信全局唯一票据access_token】>>>执行定时器任务
+[2017-11-03 13:17:14]: runtime-log ERROR 46 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)
+[2017-11-03 13:32:25]: runtime-log ERROR 46 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)

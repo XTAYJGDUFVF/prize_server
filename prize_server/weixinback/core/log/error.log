@@ -1,0 +1,4 @@
+[2017-11-02 14:26:50]: runtime-log ERROR 43 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)
+[2017-11-03 13:10:55]: runtime-log ERROR 46 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)
+[2017-11-03 13:17:14]: runtime-log ERROR 46 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)
+[2017-11-03 13:32:25]: runtime-log ERROR 46 微信sign校验,---ExceptionHTTP 400: Bad Request (Missing argument signature)
