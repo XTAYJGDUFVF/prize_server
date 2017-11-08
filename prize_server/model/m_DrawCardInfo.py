@@ -6,6 +6,7 @@ from config import Config
 from .base import BaseModel
 from .m_error import ErrorCode
 from util.util import Utils
+from weixinback.core.server.wxconfig import WxConfig
 
 
 
@@ -29,6 +30,7 @@ class DrawCardInfo(BaseModel):
             if res_insert_draw < 0:
                 self.Break()
             uid = account_info['UserID']
+
             '''本地数据库试验'''
             # res_insert_score = yield db_client.increase_update(r'game_score_info', where={'user_id': uid},
             #                                                    fields1={'insure_score': 5})
@@ -36,16 +38,16 @@ class DrawCardInfo(BaseModel):
             #     self.Break()
 
             '''mssql数据库正式操作'''
-            # mssql_score_conn = self.get_mssql_conn(Config.MssqlTreasureDbName)
-            # with mssql_score_conn.cursor() as cur:
-            #     cur.execute(r"update GameScoreInfo set InsureScore = InsureScore + {} where UserID = {}".format(
-            #                                                                                             5,
-            #                                                                                             uid))
-            #     rowcount = cur.rowcount
-            #     if not rowcount > 0:
-            #         self.Break()
-            # mssql_score_conn.commit()
-            # mssql_score_conn.close()
+            mssql_score_conn = self.get_mssql_conn(Config.MssqlTreasureDbName)
+            with mssql_score_conn.cursor() as cur:
+                cur.execute(r"update GameScoreInfo set InsureScore = InsureScore + {} where UserID = {}".format(
+                                                                                                WxConfig.focus_card_num,
+                                                                                                uid))
+                rowcount = cur.rowcount
+                if not rowcount > 0:
+                    self.Break()
+            mssql_score_conn.commit()
+            mssql_score_conn.close()
             result = True
         return result
 
@@ -60,7 +62,7 @@ class DrawCardInfo(BaseModel):
         with catch_error():
             db_client = self.get_db_client()
             res = yield db_client.select('draw_card_info', what='union_id', where={'union_id': union_id})
-            print(res)
+            # print(res)
             if not res:
                 self.Break()
             result = True

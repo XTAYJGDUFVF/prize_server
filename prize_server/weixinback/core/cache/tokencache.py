@@ -11,7 +11,7 @@ class TokenCache(BaseModel):
     set_cache               添加redis
     get_cache               获取redis
     """
-    _expire_access_token = 7000   # 微信access_token过期时间, 2小时,安全起见设置为此
+    _expire_access_token = 7100   # 微信access_token过期时间, 2小时,安全起见设置为此
     KEY_ACCESS_TOKEN = 'access_token'  # 微信全局唯一票据access_token
 
     @coroutine

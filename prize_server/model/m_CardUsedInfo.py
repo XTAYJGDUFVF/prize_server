@@ -17,6 +17,8 @@ class CardUsedInfoModel(BaseModel):
         with catch_error():
             mssql_account_conn = self.get_mssql_conn(Config.MssqlRecordDbName)
             today_zero = Utils.today_zero()
+            # today_zero = 0
+            # uid = 5658      # 42
             with mssql_account_conn.cursor() as cur:
                 cur.execute(r"""select 
                                 sum(CostValue) as today_used_count 
@@ -26,13 +28,13 @@ class CardUsedInfoModel(BaseModel):
                                 and CostFrom in (1,2)""".format(uid, today_zero))
                 _infos = cur.fetchall()
             mssql_account_conn.close()
+            # print(_infos)
             if not _infos[0]['today_used_count']:
                 return result
             if _infos[0]['today_used_count'] > 0:
                 result[0] = True
                 result[1] = _infos
             if _infos[0]['today_used_count'] < 0:
-                result[0] = True
-                result[1] = 0
+                return result
         return result
 

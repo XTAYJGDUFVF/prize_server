@@ -35,6 +35,9 @@ class WxConfig(object):
     '''关注后自动回复的消息'''
     follow_auto_reply = '欢迎关注！！！首次关注即可领取房卡5张！请回复领取！'
 
+    '''关注领取房卡的张数'''
+    focus_card_num = 5
+
     '''验证所需要的token'''
     token = 'test123456'
 

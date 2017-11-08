@@ -48,7 +48,7 @@ class MakePrize(BaseModel):
                             'first_time': Utils.timestamp(),
                             'left_chance': 1,
                             'used_chance': 0,
-                            'added_chance': 1,
+                            'added_chance': 0,
                         }
                         insert_make_prize_statu = yield db_client.insert('make_prize',
                                                                          **param)
@@ -65,7 +65,7 @@ class MakePrize(BaseModel):
                     'first_time': Utils.timestamp(),
                     'left_chance': 1,
                     'used_chance': 0,
-                    'added_chance': 1,
+                    'added_chance': 0,
                 }
                 flush_status = yield db_client.update('make_prize',
                                                       **param,
@@ -80,7 +80,7 @@ class MakePrize(BaseModel):
             # print(6, info)      # [{'left_chance': 1, 'used_chance': 0, 'added_chance': 1}]
             left_chance = info[0]['left_chance']
             added_chance = info[0]['added_chance']
-            today_used_count = yield CardUsedInfoModel().today_used_info(uid)
+            today_used_count = yield CardUsedInfoModel().today_used_info(uid)       # 获取当天使用房卡数量
             # print(7, today_used_count)      # [False, -20017 ]
             if not today_used_count[0]:
                 today_used = 0
@@ -88,9 +88,13 @@ class MakePrize(BaseModel):
                 today_used = today_used_count[1][0]['today_used_count']
                 if today_used <= 0:
                     today_used = 0
+            # print(today_used)
+            today_used = 30
             all_time = divmod(today_used, Config.EveryChanceRequire)[0]
+            # print('all_time', all_time)
             all_times = all_time if all_time < total_chance else total_chance
             add_time = all_times - added_chance
+            # print('added_time', add_time)
             if add_time < 0:
                 add_time = 0
             add_time_status = yield db_client.increase_update(r'make_prize',
@@ -101,7 +105,9 @@ class MakePrize(BaseModel):
             if add_time_status < 0:     # 受影响的行数  0
                 result[1] = ErrorCode.Database.set_extra("更新奖品次数失败！")
                 self.Break()
-            result[1] = left_chance + add_time
+
+            result[1] = [left_chance + add_time, today_used]
+
             result[0] = True
         return result
 

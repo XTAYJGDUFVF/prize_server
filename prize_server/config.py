@@ -69,7 +69,7 @@ class _Config(Configure):
 
         self.MssqlRecordDbName = self._parser.get(r'Mssql', r'MssqlRecordDbName')
 
-        # self.MssqlTreasureDbName = self._parser.get(r'Mssql', r'MssqlTreasureDbName')
+        self.MssqlTreasureDbName = self._parser.get(r'Mssql', r'MssqlTreasureDbName')
 
 
 

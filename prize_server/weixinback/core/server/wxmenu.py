@@ -20,7 +20,9 @@ class WxMenuServer(RequestBaseHandler):
 
     @coroutine
     def get(self):
+
         '''创建菜单数据'''
+
         # wx_menu_server.create_menu_data()
         # '''自定义菜单创建接口'''
         control = self.get_arg_str('todo')
@@ -47,11 +49,11 @@ class WxMenuServer(RequestBaseHandler):
                 res = r.text
                 logger.debug('【微信自定义菜单】自定义菜单创建接口' + res)
                 json_res = json.loads(res)
-                if 'errcode' in json_res.keys():
-                    errcode = json_res['errcode']
-                    return errcode
+                return json_res
+            return r.text
         else:
             logger.error('【微信自定义菜单】自定义菜单创建接口获取不到access_token')
+            return self.write_json('设置失败！未获取到token！')
 
     @coroutine
     def get_menu(self):
@@ -65,11 +67,11 @@ class WxMenuServer(RequestBaseHandler):
                 res = r.text
                 logger.debug('【微信自定义菜单】自定义菜单查询接口' + res)
                 json_res = json.loads(res)
-                if 'errcode' in json_res.keys():
-                    errcode = json_res['errcode']
-                    return errcode
+                return json_res
+            return r.text
         else:
             logger.error('【微信自定义菜单】自定义菜单查询接口获取不到access_token')
+            return self.write_json('设置失败！未获取到token！')
 
     @coroutine
     def delete_menu(self):
@@ -83,11 +85,11 @@ class WxMenuServer(RequestBaseHandler):
                 res = r.text
                 logger.debug('【微信自定义菜单】自定义菜单删除接口' + res)
                 json_res = json.loads(res)
-                if 'errcode' in json_res.keys():
-                    errcode = json_res['errcode']
-                    return errcode
+                return json_res
+            return r.text
         else:
             logger.error('【微信自定义菜单】自定义菜单删除接口获取不到access_token')
+            return self.write_json('设置失败！未获取到token！')
 
     @coroutine
     def create_menu_data(self):
@@ -98,7 +100,7 @@ class WxMenuServer(RequestBaseHandler):
             # 'name': '测试菜单1',
             # 'url': WxConfig.wx_menu_state_map.get('menuIndex0')
             'type': 'click',
-            'name': '领取',
+            'name': '领取房卡',
             'key': 'draw_card',
         }
         menu_data['button'].append(menu_Index0)

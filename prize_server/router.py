@@ -6,7 +6,6 @@ from weixinback.core.server import wxauthorize
 from weixinback.core.server import wxmenu
 
 urls = [
-    (r'/test',                                                          client.user.Test),
 
 
     (r'/initial_info/?',                                                client.user.InitialInfo),

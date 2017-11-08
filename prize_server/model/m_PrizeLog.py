@@ -23,25 +23,26 @@ class PrizeLog(BaseModel):
             if plus_num:                # 插入获奖日志，并且增加房卡
                 if plus_num > 0:        # 需要增加房卡的
 
-                    '''增加房卡'''
-                    update_score_statu = yield db_client.increase_update(r'game_score_info',
-                                                                         where={'user_id': uid},
-                                                                         fields1={'insure_score': plus_num})
-                    # print(2, update_score_statu)    # 0
-                    if not update_score_statu > 0:
-                        result[1] = ErrorCode.Database.set_extra('增加房卡失败！')
-                        self.Break()
+                    '''本地试验增加房卡'''
+                    # update_score_statu = yield db_client.increase_update(r'game_score_info',
+                    #                                                      where={'user_id': uid},
+                    #                                                      fields1={'insure_score': plus_num})
+                    # # print(2, update_score_statu, prize_id, plus_num)    # 0
+                    # if update_score_statu < 0:
+                    #     result[1] = ErrorCode.Database.set_extra('增加房卡失败！')
+                    #     self.Break()
 
-                # mssql_score_conn = self.get_mssql_conn(Config.MssqlTreasureDbName)
-                # with mssql_score_conn.cursor() as cur:
-                #     cur.execute(r"""update GameScoreInfo set InsureScore =
-                #                     InsureScore + {} where UserID = {}""".format(plus_num, uid))
-                #     rowcount = cur.rowcount
-                #     if not rowcount > 0:
-                #         result[1] = ErrorCode.Database.set_extra(r'添加房卡失败！')
-                #         self.Break()
-                # mssql_score_conn.commit()
-                # mssql_score_conn.close()
+                    '''上线数据库增加房卡'''
+                    mssql_score_conn = self.get_mssql_conn(Config.MssqlTreasureDbName)
+                    with mssql_score_conn.cursor() as cur:
+                        cur.execute(r"""update GameScoreInfo set InsureScore =
+                                        InsureScore + {} where UserID = {}""".format(plus_num, uid))
+                        rowcount = cur.rowcount
+                        if not rowcount > 0:
+                            result[1] = ErrorCode.Database.set_extra(r'添加房卡失败！')
+                            self.Break()
+                    mssql_score_conn.commit()
+                    mssql_score_conn.close()
 
                 '''更新获奖日志，需要加京东卡或红包的'''
                 insert_statu = yield db_client.insert('prize_log', **param)
@@ -66,7 +67,7 @@ class PrizeLog(BaseModel):
         return result
 
     @coroutine
-    def per_today_prize_count(self, uid, prize_id):
+    def per_today_prize_count(self, uid, prize_id):     # 该奖项今天该人获得的数量
         num = None
         with catch_error():
             db_client = self.get_db_client()

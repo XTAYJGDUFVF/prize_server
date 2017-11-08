@@ -47,9 +47,9 @@ class AnalysisChance(Singleton):
         if draw_card_info:
             return '%s,你已经领取过了！' % (nickname,)
         else:
-            union_id_info = yield m_account_info.get_mssql_user_info_by_union_id(union_id)
+            union_id_info = yield m_account_info.get_mssql_user_info_by_union_id(union_id)      # 返回一个字典
             if union_id_info[0]:
                 initial_draw_status = yield m_draw_card_info.initial_draw_card_info(union_id_info[1])
                 if initial_draw_status:
                     return '%s,领取成功，快去游戏吧！' % (nickname,)
-            return '%s,您没有登录绑定游戏，快去下载绑定吧！'%(nickname,)
+            return '%s,您没有登录绑定游戏，快去下载绑定吧！' % (nickname,)

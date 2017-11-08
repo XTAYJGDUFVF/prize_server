@@ -56,8 +56,10 @@ class PrizeInfoModel(BaseModel):
         prize_list = []
         prize_need_list = []
         for per in prize_info:
-            prize_list.append({per['prize_id']: per['picture_url']})
+            prize_list.append({'prize_id': per['prize_id'], 'prize_url': per['picture_url']})
             prize_need_list.append({per['prize_id']: {'probability': per['prize_probability'],
+                                                      'notice_statu': per['notice_statu'],
+                                                      'prize_name': per['prize_name'],
                                                       'prize_num': per['prize_num'],
                                                       'largest_perday': per['largest_num_everyday'],
                                                       'largest_per_get': per['largest_per_person_get'],
@@ -70,7 +72,6 @@ class PrizeInfoModel(BaseModel):
         cache_client = self.get_cache_client()
         prize_need_list = yield cache_client.get("prize_need_list")
         if prize_need_list:
-            pass
             return prize_need_list
         else:
             prize_info = yield self.init_prize_info()
